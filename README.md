@@ -1,6 +1,6 @@
 # SU(3) CG Code
 
-This code is designed to calculate reduced SU(3) Clebsch-Gordan coefficients of the tensor product (p_1,q_1)x(lambda,0)->$(p_2,q_2)$. 
+This code is designed to calculate reduced SU(3) Clebsch-Gordan coefficients of the tensor product (p_1,q_1)x(lambda,0)->(p_2,q_2). 
 
 The code defines a function named "su3cg". The input into the function is in the following style: {p_1,q_1},{v_1,I_1},{lambda,0},{n_1,I_2},{p_2,q_2},{N_1,I_3}. Where {v_1,I_1},{n_1,I_2},{N_1,I_3} are the first quantum number and angular momentum corresponding to their preceding irrep, {p_1,q_1},{lambda,0},{p_2,q_2} respectively. 
 
