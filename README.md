@@ -26,6 +26,6 @@ Say you wanted to couple (3,2)x(3,0) and wanted <a href="https://www.codecogs.co
 
 su3cg[{3,2},{2,3/2},{3,0},{2,1/2},{0,5},{4,2}]
 
-and would obtain an answer of <a href="https://www.codecogs.com/eqnedit.php?latex=\frac{\sqrt{3}}{5}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\frac{\sqrt{3}}{5}" title="\frac{\sqrt{3}}{5}" /></a>.
+and would obtain an answer of <a href="https://www.codecogs.com/eqnedit.php?latex=\textstyle\frac{\sqrt{3}}{5}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\textstyle\frac{\sqrt{3}}{5}" title="\textstyle\frac{\sqrt{3}}{5}" /></a>.
 
 The code for this example should take a fraction of a second to run, however, for larger irrep numbers, greater <a href="https://www.codecogs.com/eqnedit.php?latex=k" target="_blank"><img src="https://latex.codecogs.com/gif.latex?k" title="k" /></a> values, and certain quantum number and angular momentum sets, the run time could be upwards of 90 seconds as we have found in some cases, though there doesn't seem to be an obvious recipe for long calculation times.
