@@ -1,5 +1,10 @@
 # SU(3) CG Code
 
+This is a code written using Mathematica 11.3 to implement an algorithm given in: 
+"SU(3) Clebsch-Gordan coefficients and some of their symmetries" 
+by Alex Cl ́esio Nunes Martins, Mark W. Suffak, Hubert de Guise 
+
+## Usage
 This code is designed to calculate reduced SU(3) Clebsch-Gordan coefficients of the tensor product <a href="https://www.codecogs.com/eqnedit.php?latex=(p_1,q_1)\otimes(\lambda,0)\rightarrow(p_2,q_2)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?(p_1,q_1)\otimes(\lambda,0)\rightarrow(p_2,q_2)" title="(p_1,q_1)\otimes(\lambda,0)\rightarrow(p_2,q_2)" /></a>. These coefficients are written in the form:
 <a href="https://www.codecogs.com/eqnedit.php?latex=\Big\langle\begin{array}{c}&space;(p_1,q_1)\\&space;v_1;I_1&space;\end{array};&space;\begin{array}{c}&space;(\lambda,0)\\&space;n_1;I_2&space;\end{array}\vert\vert&space;\begin{array}{c}&space;(p_2,q_2)\\&space;N_1;I_3&space;\end{array}\Big\rangle" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\Big\langle\begin{array}{c}&space;(p_1,q_1)\\&space;v_1;I_1&space;\end{array};&space;\begin{array}{c}&space;(\lambda,0)\\&space;n_1;I_2&space;\end{array}\vert\vert&space;\begin{array}{c}&space;(p_2,q_2)\\&space;N_1;I_3&space;\end{array}\Big\rangle" title="\Big\langle\begin{array}{c} (p_1,q_1)\\ v_1;I_1 \end{array}; \begin{array}{c} (\lambda,0)\\ n_1;I_2 \end{array}\vert\vert \begin{array}{c} (p_2,q_2)\\ N_1;I_3 \end{array}\Big\rangle" /></a>
 
@@ -20,7 +25,7 @@ The "SU32SU2" function takes an irrep (<a href="https://www.codecogs.com/eqnedit
 
 If the input <a href="https://www.codecogs.com/eqnedit.php?latex=(p_2,q_2)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?(p_2,q_2)" title="(p_2,q_2)" /></a> irrep is not in the decomposition of <a href="https://www.codecogs.com/eqnedit.php?latex=(p_1,q_1)\otimes(\lambda,0)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?(p_1,q_1)\otimes(\lambda,0)" title="(p_1,q_1)\otimes(\lambda,0)" /></a>, or if the input sets of quantum numbers and angular momenta do not exist for the specific irreps, then the user will obtain a zero from the output of the main function. (Of course, it is important to remember that it is possible to have all numbers satisfying the appropriate conditions and still have the Clebsch-Gordan coefficient come out as zero.)
 
-Example
+### Example
 
 Say you wanted to couple (3,2)<a href="https://www.codecogs.com/eqnedit.php?latex=\otimes" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\otimes" title="\otimes" /></a>(3,0) and wanted <a href="https://www.codecogs.com/eqnedit.php?latex=k=0" target="_blank"><img src="https://latex.codecogs.com/gif.latex?k=0" title="k=0" /></a>. Then you would type the function "decomposition[3,2,3]" and find that (0,5) is one of the <a href="https://www.codecogs.com/eqnedit.php?latex=(p_2,q_2)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?(p_2,q_2)" title="(p_2,q_2)" /></a> options for which <a href="https://www.codecogs.com/eqnedit.php?latex=k=0" target="_blank"><img src="https://latex.codecogs.com/gif.latex?k=0" title="k=0" /></a>. You can then use "SU32SU2[{3,2}]", 
 "SU32SU2[{3,0}]" and "SU32SU2[{0,5}]" to obtain lists of the possible quantum number and angular momentum sets for each irrep. After making your choice for each irrep, you can use the "su3cg" function as follows:
@@ -29,4 +34,5 @@ su3cg[{3,2},{2,3/2},{3,0},{2,1/2},{0,5},{4,2}]
 
 and would obtain an answer of <a href="https://www.codecogs.com/eqnedit.php?latex=\textstyle\frac{\sqrt{3}}{5}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\textstyle\frac{\sqrt{3}}{5}" title="\textstyle\frac{\sqrt{3}}{5}" /></a>.
 
+### Performance
 The code for this example should take a fraction of a second to run, however, for larger irrep numbers, greater <a href="https://www.codecogs.com/eqnedit.php?latex=k" target="_blank"><img src="https://latex.codecogs.com/gif.latex?k" title="k" /></a> values, and certain quantum number and angular momentum sets, the run time could be upwards of 90 seconds as we have found in some cases, though there doesn't seem to be an obvious recipe for long calculation times.
