@@ -1,38 +1,61 @@
 # SU(3) CG Code
 
-This is a code written using Mathematica 11.3 to implement an algorithm given in: 
+This is a code written using Mathematica 11.3 to implement an algorithm given in :
+ 
 "SU(3) Clebsch-Gordan coefficients and some of their symmetries" 
-by Alex Cl ́esio Nunes Martins, Mark W. Suffak, Hubert de Guise 
+by Alex Clésio Nunes Martins, Mark W. Suffak and Hubert de Guise 
 
 ## Usage
-This code is designed to calculate reduced SU(3) Clebsch-Gordan coefficients of the tensor product <a href="https://www.codecogs.com/eqnedit.php?latex=(p_1,q_1)\otimes(\lambda,0)\rightarrow(p_2,q_2)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?(p_1,q_1)\otimes(\lambda,0)\rightarrow(p_2,q_2)" title="(p_1,q_1)\otimes(\lambda,0)\rightarrow(p_2,q_2)" /></a>. These coefficients are written in the form:
-<a href="https://www.codecogs.com/eqnedit.php?latex=\Big\langle\begin{array}{c}&space;(p_1,q_1)\\&space;v_1;I_1&space;\end{array};&space;\begin{array}{c}&space;(\lambda,0)\\&space;n_1;I_2&space;\end{array}\vert\vert&space;\begin{array}{c}&space;(p_2,q_2)\\&space;N_1;I_3&space;\end{array}\Big\rangle" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\Big\langle\begin{array}{c}&space;(p_1,q_1)\\&space;v_1;I_1&space;\end{array};&space;\begin{array}{c}&space;(\lambda,0)\\&space;n_1;I_2&space;\end{array}\vert\vert&space;\begin{array}{c}&space;(p_2,q_2)\\&space;N_1;I_3&space;\end{array}\Big\rangle" title="\Big\langle\begin{array}{c} (p_1,q_1)\\ v_1;I_1 \end{array}; \begin{array}{c} (\lambda,0)\\ n_1;I_2 \end{array}\vert\vert \begin{array}{c} (p_2,q_2)\\ N_1;I_3 \end{array}\Big\rangle" /></a>
+This code is designed to calculate reduced SU(3) Clebsch-Gordan coefficients states in the irreducible representation $(p_2,q_2)$ that occurs in the tensor product  $(p_1,q_1)\otimes (\lambda,0)$.  This coupling is multiplicity-free, i.e. the irrep $(p_2,q_2)$ occurs at most once in the reduction of the decomposition.  The algorithm is limited to the couplings of the type above and will not work for general $(\lambda,\mu)$ irrep.
 
-The code defines a function named "su3cg". The input into the function is in the following style: <a href="https://www.codecogs.com/eqnedit.php?latex=\{p_1,q_1\},\{v_1,I_1\},\{\lambda,0\},\{n_1,I_2\},\{p_2,q_2\},\{N_1,I_3\}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\{p_1,q_1\},\{v_1,I_1\},\{\lambda,0\},\{n_1,I_2\},\{p_2,q_2\},\{N_1,I_3\}" title="\{p_1,q_1\},\{v_1,I_1\},\{\lambda,0\},\{n_1,I_2\},\{p_2,q_2\},\{N_1,I_3\}" /></a>. Where <a href="https://www.codecogs.com/eqnedit.php?latex=\{v_1,I_1\},\{n_1,I_2\},\{N_1,I_3\}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\{v_1,I_1\},\{n_1,I_2\},\{N_1,I_3\}" title="\{v_1,I_1\},\{n_1,I_2\},\{N_1,I_3\}" /></a> are the first quantum number and angular momentum corresponding to their preceding irrep, <a href="https://www.codecogs.com/eqnedit.php?latex=\{p_1,q_1\},\{\lambda,0\},\{p_2,q_2\}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\{p_1,q_1\},\{\lambda,0\},\{p_2,q_2\}" title="\{p_1,q_1\},\{lambda,0\},\{p_2,q_2\}" /></a> respectively. 
+In addition to the dependence on $(p_1,q_1)$, $(\lambda,0)$ and $(p_2,q_2)$, the reduced CG  $\left\langle 
+{(p_1,q_1) \atop {\nu_1; I_1}} \, 
+{(\lambda,0)\atop {n_1; I_2} }\Big\Vert 
+{(p_2,q_2)\atop N_1 ;I_3}\right\rangle$ 
+depends on occupation numbers $\nu_1, n_1$ and $N_1$, and on $\mathfrak{su}(2)$ quantum numbers $I_1,I_2$ and $I_3$.  
 
-Please note that the variable <a href="https://www.codecogs.com/eqnedit.php?latex=\mu" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\mu" title="\mu" /></a> specified in the function within the irrep <a href="https://www.codecogs.com/eqnedit.php?latex=(\lambda,\mu)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?(\lambda,\mu)" title="(\lambda,\mu)" /></a> must be set to zero when running the function after it is initially defined; <a href="https://www.codecogs.com/eqnedit.php?latex=(\lambda,0)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?(\lambda,0)" title="(\lambda,0)" /></a> is the only form of that irrep which this code is designed to calculate.
+The syntax is
 
-The choice of quantum numbers and angular momenta to go along with the irreps is not random. The following rules must be satisfied:
+    su3cg[{p1,q1},{nu1,I1},{lambda,0},{n1,I2},{p2,q2},{N1,I3}]
 
-1. <a href="https://www.codecogs.com/eqnedit.php?latex=|I_2-I_1|\leq&space;I_3&space;\leq&space;I_1&plus;I_2" target="_blank"><img src="https://latex.codecogs.com/gif.latex?|I_2-I_1|\leq&space;I_3&space;\leq&space;I_1&plus;I_2" title="|I_2-I_1|\leq I_3 \leq I_1+I_2" /></a>
-2. <a href="https://www.codecogs.com/eqnedit.php?latex=v_1&plus;n_1&space;=&space;N_1&plus;k" target="_blank"><img src="https://latex.codecogs.com/gif.latex?v_1&plus;n_1&space;=&space;N_1&plus;k" title="v_1+n_1 = N_1+k" /></a> where <a href="https://www.codecogs.com/eqnedit.php?latex=k&space;=&space;\textstyle\frac{1}{3}(p_1&plus;2q_1&plus;\lambda-p_2-2q_2)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?k&space;=&space;\textstyle\frac{1}{3}(p_1&plus;2q_1&plus;\lambda-p_2-2q_2)" title="k = \textstyle\frac{1}{3}(p_1+2q_1+\lambda-p_2-2q_2)" /></a>
+Defining 
+$$
+k=\frac{1}{3}(p_1+2q_1+\lambda -p_2-2q_2) \tag{1}
+$$
+the possible values of $N_1,I_3$ that will produce a non-zero reduced CG are
 
-To assist the user with choosing these numbers, we've included the "decomposition" and "SU32SU2" functions.
+ 1. $\vert I_2-I_1\vert \le I_3\le I_1+I_2$,
+ 2. $\nu_1+n_1=N_1+k$
 
-The "decomposition" function takes the input: <a href="https://www.codecogs.com/eqnedit.php?latex=p_1,q_1,\lambda" target="_blank"><img src="https://latex.codecogs.com/gif.latex?p_1,q_1,\lambda" title="p_1,q_1,\lambda" /></a>. The output is a list of <a href="https://www.codecogs.com/eqnedit.php?latex=(p_2,q_2)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?(p_2,q_2)" title="(p_2,q_2)" /></a> irreps which are possible from the coupling of <a href="https://www.codecogs.com/eqnedit.php?latex=(p_1,q_1)\otimes(\lambda,0)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?(p_1,q_1)\otimes(\lambda,0)" title="(p_1,q_1)\otimes(\lambda,0)" /></a>. These irreps are for all <a href="https://www.codecogs.com/eqnedit.php?latex=k" target="_blank"><img src="https://latex.codecogs.com/gif.latex?k" title="k" /></a> values, so if you're looking to have a specific <a href="https://www.codecogs.com/eqnedit.php?latex=k" target="_blank"><img src="https://latex.codecogs.com/gif.latex?k" title="k" /></a> value, it's best to check which <a href="https://www.codecogs.com/eqnedit.php?latex=(p_2,q_2)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?(p_2,q_2)" title="(p_2,q_2)" /></a> irreps suit your needs.
+The file contains three ancillary routines. 
 
-The "SU32SU2" function takes an irrep (<a href="https://www.codecogs.com/eqnedit.php?latex=(p_1,q_1)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?(p_1,q_1)" title="(p_1,q_1)" /></a> for instance), and outputs all physically possible values of <a href="https://www.codecogs.com/eqnedit.php?latex=(v_1,I_1)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?(v_1,I_1)" title="(v_1,I_1)" /></a>. The user can use this function for all irreps if they would like, and pick the sets of quantum numbers and angular momenta which suit the rules above, while ensuring they are physically possible within the specific irrep.
+The first is `SU32SU2[{p1,q1}]` that will list all possible values of the pairs $\nu_1 I_1$ in the irrep $(p_1,q_1)$.
 
-If the input <a href="https://www.codecogs.com/eqnedit.php?latex=(p_2,q_2)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?(p_2,q_2)" title="(p_2,q_2)" /></a> irrep is not in the decomposition of <a href="https://www.codecogs.com/eqnedit.php?latex=(p_1,q_1)\otimes(\lambda,0)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?(p_1,q_1)\otimes(\lambda,0)" title="(p_1,q_1)\otimes(\lambda,0)" /></a>, or if the input sets of quantum numbers and angular momenta do not exist for the specific irreps, then the user will obtain a zero from the output of the main function. (Of course, it is important to remember that it is possible to have all numbers satisfying the appropriate conditions and still have the Clebsch-Gordan coefficient come out as zero.)
+The second is `decomposition[p1,q1,lambda]` that will list the sum of irreps $(p_2,q_2)$ in the decomposition $(p_1,q_1)\otimes(\lambda,0)$.
+
+The last is `su3dim[lambda,mu]` that will return the dimension of irrep $(\lambda,\mu)$.
+
 
 ### Example
 
-Say you wanted to couple (3,2)<a href="https://www.codecogs.com/eqnedit.php?latex=\otimes" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\otimes" title="\otimes" /></a>(3,0) and wanted <a href="https://www.codecogs.com/eqnedit.php?latex=k=0" target="_blank"><img src="https://latex.codecogs.com/gif.latex?k=0" title="k=0" /></a>. Then you would type the function "decomposition[3,2,3]" and find that (0,5) is one of the <a href="https://www.codecogs.com/eqnedit.php?latex=(p_2,q_2)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?(p_2,q_2)" title="(p_2,q_2)" /></a> options for which <a href="https://www.codecogs.com/eqnedit.php?latex=k=0" target="_blank"><img src="https://latex.codecogs.com/gif.latex?k=0" title="k=0" /></a>. You can then use "SU32SU2[{3,2}]", 
-"SU32SU2[{3,0}]" and "SU32SU2[{0,5}]" to obtain lists of the possible quantum number and angular momentum sets for each irrep. After making your choice for each irrep, you can use the "su3cg" function as follows:
+Consider the problem of obtaining some reduced CG for states in the decomposition of the product $(3,2)\otimes (3,0)$.  
 
-su3cg[{3,2},{2,3/2},{3,0},{2,1/2},{0,5},{4,2}]
+    decomposition[3,2,3]={{6, 2}, {4, 3}, {2, 4}, {0, 5}, {5, 1}, {3, 2}, {1, 3}, {4, 0}, {2,1}} 
+  is the list of all $(p_2,q_2)$ in this tensor product.
 
-and would obtain an answer of <a href="https://www.codecogs.com/eqnedit.php?latex=\textstyle\frac{\sqrt{3}}{5}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\textstyle\frac{\sqrt{3}}{5}" title="\textstyle\frac{\sqrt{3}}{5}" /></a>.
+    SU32SU2[{3,2}]={{5, 1}, {4, 3/2}, {4, 1/2}, {3, 2}, {3, 1}, {3, 0}, {2, 5/2}, {2, 3/2}, {2, 1/2}, {1, 2}, {1, 1}, {0, 3/2}}
+  is the list of all possible $\nu_1,I_1$ pairs in irrep $\{3,2\}$.
+
+and finally 
+`su3cg[{3,2},{2,3/2},{3,0},{2,1/2},{0,5},{4,2}]`
+returns $\frac{\sqrt{3}}{5}$ as the reduced CG for $(p_2,q_2)=(0,5)$ and $(N_1,I_3)=(4,2)$.
 
 ### Performance
-The code for this example should take a fraction of a second to run, however, for larger irrep numbers, greater <a href="https://www.codecogs.com/eqnedit.php?latex=k" target="_blank"><img src="https://latex.codecogs.com/gif.latex?k" title="k" /></a> values, and certain quantum number and angular momentum sets, the run time could be upwards of 90 seconds as we have found in some cases, though there doesn't seem to be an obvious recipe for long calculation times.
+The code for `su3cg[{3,2},{2,3/2},{3,0},{2,1/2},{0,5},{4,2}]` should take a fraction of a second to run. 
+
+We have tested the performance for larger irreps, greater $k$ values, and certain combination of quantum number $(\nu_1,I_1), (n_1,I_2),(N_1,I_3)$ by computing selected reduced CG in the tensor product $(75,60)\otimes (53,0)$, of dimensions $304695$ and $1485$ respectively.  There are $1485$ distinct reduced CG in the figure, and the total computation time was approximately $8$ hours on standard desktop, for an average of $20$ seconds per reduced Clebsch-Gordan coefficient.  Some individual coefficients took upwards of 90 seconds to evaluate and there doesn't seem to be an obvious recipe to reduce long calculation times.  
+
+### References
+
+ 1. Alex Clésio Nunes Martins, Mark W. Suffak and Hubert de Guise, "SU(3) Clebsch-Gordan coefficients and some of their symmetries",
+ 2. For additional details on the notation see also: Rowe, D. J., B. C. Sanders, and H. de Guise. "Representations of the Weyl group and Wigner functions for SU(3)." Journal of Mathematical Physics 40.7 (1999): 3604-3615 (available [here](http://hdeguise.lakeheadu.ca/pdffiles/su3wignerfunction.pdf) or [here](https://www.researchgate.net/profile/Barry_Sanders/publication/2094364_Representations_of_the_Weyl_group_and_Wigner_functions_for_SU3/links/579402c308aeb0ffcce52f2c/Representations-of-the-Weyl-group-and-Wigner-functions-for-SU3.pdf)).
